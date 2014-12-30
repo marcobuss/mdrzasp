@@ -32,7 +32,7 @@ angular.module('mdrzaspApp')
         }, function (error) {
           console.log(error);
           $scope.error = {
-            email: 'Die angegebene E-Mail existiert bereits im System'
+            email: 'Die angegebene E-Mail existiert bereits im System.'
           }
         });
     };
@@ -41,7 +41,7 @@ angular.module('mdrzaspApp')
       $scope.error = null;
       if(!credentials.email) {
         $scope.error = {
-          email: 'Es muss eine E-Mail Adresse angegeben werden'
+          email: 'Es muss eine E-Mail Adresse angegeben werden.'
         };
         return false;
       }
@@ -55,21 +55,21 @@ angular.module('mdrzaspApp')
 
       if(credentials.email !== credentials.emailRepeat) {
         $scope.error = {
-          emailRepeat: 'Die eingegebenen E-Mails unterscheiden sich'
+          emailRepeat: 'Die eingegebenen E-Mails unterscheiden sich.'
         };
         return false;
       }
 
       if(!credentials.password) {
         $scope.error = {
-          password: 'Es muss ein Passwort eingegeben werden'
+          password: 'Es muss ein Passwort eingegeben werden.'
         };
         return false;
       }
 
       if(credentials.password !== credentials.passwordRepeat) {
         $scope.error = {
-          passwordRepeat: 'Passwort und Passwort (Wiederholung) sind nicht identisch'
+          passwordRepeat: 'Passwort und Passwort (Wiederholung) sind nicht identisch.'
         };
         return false;
       }
@@ -82,9 +82,11 @@ angular.module('mdrzaspApp')
       promise.then(function (user) {
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
         $scope.setCurrentUser(user);
-
       }, function() {
         $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        $scope.error = {
+          credentials : 'Benutzername oder Passwort falsch.'
+        }
       });
 
       return promise;
