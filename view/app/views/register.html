@@ -2,13 +2,25 @@
   <div class="panel-heading">Benutzer registrieren</div>
   <div class="panel-body">
     <form ng-submit="registerNewUser(credentials)">
-      <div class="form-group">
-        <label for="email">E-Mail Adresse:</label>
+      <div class="alert alert-danger alert-dismissible" role="alert" ng-show="error">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{error.email}}{{error.emailRepeat}}{{error.password}}{{error.passwordRepeat}}
+      </div>
+      <div class="form-group" ng-class="{'has-error': error.email}">
+        <label for="email" class="control-label">E-Mail Adresse:</label>
         <input class="form-control" type="email" id="email" ng-model="credentials.email"/>
       </div>
-      <div class="form-group">
-        <label for="password">Passwort:</label>
+      <div class="form-group" ng-class="{'has-error': error.emailRepeat}">
+        <label for="email_repeat" class="control-label">E-Mail Adresse (Wiederholung):</label>
+        <input class="form-control" type="email" id="email_repeat" ng-model="credentials.emailRepeat"/>
+      </div>
+      <div class="form-group" ng-class="{'has-error': error.password}">
+        <label for="password" class="control-label">Passwort:</label>
         <input class="form-control" type="password" id="password" ng-model="credentials.password"/>
+      </div>
+      <div class="form-group" ng-class="{'has-error': error.passwordRepeat}">
+        <label for="password_repeat" class="control-label">Passwort (Wiederholung):</label>
+        <input class="form-control" type="password" id="password_repeat" ng-model="credentials.passwordRepeat"/>
       </div>
       <button type="submit" class="btn btn-default">Registrieren</button>
     </form>

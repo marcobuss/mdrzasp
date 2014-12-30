@@ -11,7 +11,7 @@ angular.module('mdrzaspApp').directive('loginDialog', function (AUTH_EVENTS) {
 
       var hideDialog = function () {
         scope.showLogin = false;
-      }
+      };
 
       scope.visible = false;
       scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);

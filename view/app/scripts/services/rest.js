@@ -9,7 +9,7 @@ service.factory('Users', function($resource) {
     {},
     {
       register: { method: 'post', params: {} },
-      login: { method: 'post', params: { method: "login" } }
+      login: { method: 'post', params: { method: 'login' } }
     }
   );
 });
