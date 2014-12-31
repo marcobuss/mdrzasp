@@ -17,6 +17,7 @@ angular.module('mdrzaspApp').directive('loginDialog', function (AUTH_EVENTS) {
       scope.$on(AUTH_EVENTS.notAuthenticated, showDialog);
       scope.$on(AUTH_EVENTS.sessionTimeout, showDialog);
       scope.$on(AUTH_EVENTS.loginSuccess, hideDialog);
+      scope.$on(AUTH_EVENTS.authenticationNotRequired, hideDialog);
     }
   };
 });

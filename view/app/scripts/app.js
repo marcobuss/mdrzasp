@@ -48,6 +48,8 @@ angular
             $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
           }
         }
+      } else {
+        $rootScope.$broadcast(AUTH_EVENTS.authenticationNotRequired);
       }
     });
 
@@ -70,7 +72,8 @@ angular
     logoutSuccess: 'auth-logout-success',
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
-    notAuthorized: 'auth-not-authorized'
+    notAuthorized: 'auth-not-authorized',
+    authenticationNotRequired: 'auth-not-required'
   })
   .constant('USER_ROLES', {
     all: '*',

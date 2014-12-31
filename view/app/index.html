@@ -14,15 +14,20 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 </head>
-<body ng-app="mdrzaspApp" ng-controller="ApplicationController">
+<body ng-app="mdrzaspApp" ng-controller="ApplicationController" >
 <div class="container">
+  <nav class="navbar navbar-default navbar-fixed-top" ng-show="currentUser">
+    <div class="container-fluid">
+      <p class="navbar-text">Angemeldet als {{currentUser.email}}</p>
+    </div>
+  </nav>
   <div ng-view=""></div>
   <div login-dialog ng-if="!isLoginPage"></div>
 
 </div>
 
 <footer class="footer">
-  <div class="container text-right">
+  <div class="container">
     powered by:
     <a href="https://uberspace.de"><img src="images/ueberspace.png"/></a>
     <a href="https://angularjs.org/"><img src="images/AngularJS-small.png"/></a>
