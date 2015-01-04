@@ -8,13 +8,26 @@
  * Controller of the mdrzaspApp
  */
 angular.module('mdrzaspApp')
-  .controller('MainCtrl', function ($scope, Session, Users) {
+  .controller('MainCtrl', function ($scope, Session, Entry, CATEGORYS) {
 
-    $scope.userfunc = function() {
-      console.log(Session);
-      /*var user = Users({Authorization: Session.id}).get({id: Session.userId}); */
-      var user = Users(Session.id).get({id: Session.userId});
-      console.log(user);
+    $scope.entries = Entry.find({filter: { where: { userId: Session.userId } } },
+    function(list) {
+      console.log(list);
+    },
+    function(errorResponse) {
+      console.log(errorResponse)
+    });
+
+    $scope.getInHour = function(minutes) {
+      return trunc(minutes / 60) + ':' + (minutes % 60);
+    };
+
+    $scope.getAsDisplayString = function(category) {
+      return CATEGORYS[category];
     }
+
+    function trunc(x) {
+      return x < 0 ? Math.ceil(x) : Math.floor(x);
+    };
 
  });

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mdrzaspApp').directive('loginDialog', function (AUTH_EVENTS) {
+angular.module('mdrzaspApp').directive('loginDialog', function (AUTH_EVENTS, Session) {
   return {
     restrict: 'A',
     template: '<div ng-if="showLogin" ng-include="\'views/login-form.html\'">',

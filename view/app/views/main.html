@@ -1,3 +1,24 @@
 <div class="" ng-controller="MainCtrl">
-  <!--<a class="btn btn-default" href="" role="button" ng-click="userfunc()">Link</a>-->
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Datum</th>
+      <th>Sportart</th>
+      <th>Punkte</th>
+      <th>Dauer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="entry in entries | orderBy:'date':true">
+      <td>{{$index + 1}}</td>
+      <td>{{entry.date | date:'dd. MMM yyyy'}}</td>
+      <td>
+          <strong>{{getAsDisplayString(entry.category)}}</strong><br/>
+          <small>{{entry.description}}</small>
+      </td>
+      <td><strong><span class="text-success">{{entry.points}}</span></strong></td>
+      <td>{{entry.duration}} min <small>({{getInHour(entry.duration)}}h)</small></td>
+    </tr>
+    </tbody>
 </div>

@@ -16,14 +16,22 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'apiService',
-    'authService'
+    'restService',
+    'authService',
+    'ui.bootstrap'
   ])
-  .config(function ($routeProvider, USER_ROLES) {
+  .config(function ($routeProvider, $httpProvider, USER_ROLES) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
+        data: {
+          authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
+        }
+      })
+      .when('/addentry', {
+        templateUrl: 'views/addEntry.html',
+        controller: 'AddEntryCtrl',
         data: {
           authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
         }
@@ -35,8 +43,19 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+    $httpProvider.interceptors.push(function($q, $rootScope, AUTH_EVENTS) {
+      return {
+        responseError: function(rejection) {
+          if (rejection.status == 401) {
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+          }
+          return $q.reject(rejection);
+        }
+      };
+    });
   })
-  .run(function ($rootScope, $route, AUTH_EVENTS, AuthService) {
+  .run(function ($rootScope, $route, AUTH_EVENTS, EVENTS, AuthService) {
     $rootScope.$on('$routeChangeStart', function (event, next) {
       if (next.data) {
         var authorizedRoles = next.data.authorizedRoles;
@@ -57,14 +76,25 @@ angular
       $route.reload();
     });
   })
-  .controller('ApplicationController', function ($scope, USER_ROLES, AuthService) {
+  .controller('ApplicationController', function ($scope, $rootScope, $location, USER_ROLES, AuthService) {
     $scope.currentUser = null;
     $scope.userRoles = USER_ROLES;
     $scope.isAuthorized = AuthService.isAuthorized;
 
     $scope.setCurrentUser = function (user) {
       $scope.currentUser = user;
-    }
+    };
+
+    $scope.goTo = function(path) {
+      $location.path(path);
+    };
+
+    $rootScope.$on('$routeChangeSuccess', function(event, next) {
+      $scope.path = next.originalPath;
+    });
+  })
+  .constant('EVENTS', {
+    changeSite: 'change-site'
   })
   .constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',

@@ -1,12 +1,12 @@
 'use strict';
 
-var service = angular.module('authService', ['apiService']);
+var service = angular.module('authService', ['restService']);
 
-service.factory('AuthService', function (Session, Users, USER_ROLES, $http, $q) {
+service.factory('AuthService', function (Session, User, USER_ROLES, $http, $q) {
   var authService = {};
 
   authService.register = function (credentials) {
-    return Users().register({
+    return User.create({
       email: credentials.email,
       password: credentials.password
     }).$promise;
@@ -15,11 +15,11 @@ service.factory('AuthService', function (Session, Users, USER_ROLES, $http, $q) 
   authService.login = function (credentials) {
 
     return $q(function (resolve, reject) {
-      Users().login({email: credentials.email, password: credentials.password}).$promise
+      User.login({email: credentials.email, password: credentials.password}).$promise
         .then(function (user) {
           Session.create(user.id, user.userId, USER_ROLES.admin);
 
-          return Users(Session.id).get({id: Session.userId}).$promise;
+          return User.get({id: Session.userId}).$promise;
         }, function (error) {
           reject(error);
         }).then(function (user) {
@@ -44,6 +44,8 @@ service.factory('AuthService', function (Session, Users, USER_ROLES, $http, $q) 
 });
 
 service.factory('Session', function () {
+  this.showLoginDialog;
+
   this.create = function (sessionId, userId, userRole) {
     this.id = sessionId;
     this.userId = userId;

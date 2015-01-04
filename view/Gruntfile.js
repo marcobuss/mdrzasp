@@ -27,6 +27,17 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    loopback_sdk_angular: {
+      services: {
+        options: {
+          input: '../api/server/server.js',
+          output: 'app/scripts/services/rest-service.js',
+          ngModuleName: 'restService',
+          apiUrl: 'http://0.0.0.0:3000/api'
+        }
+      }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -117,6 +128,9 @@ module.exports = function (grunt) {
         reporter: require('jshint-stylish')
       },
       all: {
+        options: {
+          ignores: ['<%= yeoman.app %>/scripts/rest-service.js']
+        },
         src: [
           'Gruntfile.js',
           '<%= yeoman.app %>/scripts/{,*/}*.js'
@@ -395,6 +409,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'loopback_sdk_angular',
       'wiredep',
       'concurrent:server',
       'autoprefixer',
