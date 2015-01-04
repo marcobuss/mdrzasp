@@ -1,0 +1,61 @@
+<div class="" ng-controller="AddEntryCtrl">
+  <div class="alert alert-success alert-dismissible" role="alert" ng-show="successMessage">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{successMessage}}
+  </div>
+  <form name="addEntryForm" novalidate ng-submit="addEntry(entry)">
+    <div class="form-group"
+         ng-class="{'has-error': addEntryForm.category.$invalid && addEntryForm.category.$touched}">
+      <label for="category" class="control-label">Sportart (*):</label>
+      <select class="form-control" id="category" name="category" ng-model="entry.category" required="true"
+              ng-options="key as value for (key, value) in categorys">
+        <option value="">Bitte Auswählen.</option>
+      </select>
+
+      <div ng-show="addEntryForm.category.$touched" class="help-block text-danger">
+        <div ng-show="addEntryForm.category.$error.required">Bitte eine Sportart wählen.</div>
+      </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': addEntryForm.date.$invalid && addEntryForm.date.$touched}">
+      <label for="date" class="control-label">Datum (*):</label>
+
+      <p class="input-group">
+        <input id="date" name="date" class="form-control" datepicker-popup="{{format}}" ng-model="entry.date"
+               is-open="opened"
+               min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"
+               required/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open($event)"><i
+              class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+      </p>
+      <div ng-show="addEntryForm.date.$touched" class="help-block text-danger">
+        <div ng-show="addEntryForm.date.$error.required">Bitte ein Datum angeben.</div>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{'has-error': addEntryForm.duration.$invalid && addEntryForm.duration.$touched}">
+      <label for="duration" class="control-label">Dauer in Minuten (ohne Pausen) (*):</label>
+      <input class="form-control" type="number" id="duration" name="duration" ng-model="entry.duration" min=15 max=1440 required>
+      <div ng-show="addEntryForm.duration.$touched" class="help-block text-danger">
+        <div ng-show="addEntryForm.duration.$error.required">Bitte eine Dauer angeben.</div>
+        <div ng-show="addEntryForm.duration.$error.min">Nur Einträge mit mehr als 15 Minuten werden gewertet.</div>
+        <div ng-show="addEntryForm.duration.$error.max">Sehr löblich, aber mehr als 24h Einheiten bitte auf 2 Einträge verteilen.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Notizen:</label>
+      <textarea class="form-control" id="description" ng-model="entry.description" rows="5"></textarea>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-default" ng-class="{'disabled': addEntryForm.$invalid}">eintragen</button>
+      </div>
+    </div>
+
+  </form>
+</div>
