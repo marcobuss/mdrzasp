@@ -2,11 +2,11 @@
 
 var service = angular.module('authService', ['restService']);
 
-service.factory('AuthService', function (Session, User, USER_ROLES, $http, $q) {
+service.factory('AuthService', function (Session, Customer, USER_ROLES, $http, $q) {
   var authService = {};
 
   authService.register = function (credentials) {
-    return User.create({
+    return Customer.create({
       email: credentials.email,
       password: credentials.password
     }).$promise;
@@ -15,17 +15,22 @@ service.factory('AuthService', function (Session, User, USER_ROLES, $http, $q) {
   authService.login = function (credentials) {
 
     return $q(function (resolve, reject) {
-      User.login({email: credentials.email, password: credentials.password}).$promise
+      Customer.login({email: credentials.email, password: credentials.password}).$promise
         .then(function (user) {
           Session.create(user.id, user.userId, USER_ROLES.admin);
 
-          return User.get({id: Session.userId}).$promise;
+          return Customer.get({id: Session.userId}).$promise;
         }, function (error) {
           reject(error);
         }).then(function (user) {
           resolve(user);
         });
     });
+  };
+
+  authService.logout = function() {
+    Customer.logout();
+    Session.destroy();
   };
 
   authService.isAuthenticated = function () {

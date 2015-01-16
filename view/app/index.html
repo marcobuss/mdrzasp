@@ -16,22 +16,32 @@
 </head>
 <body ng-app="mdrzaspApp" ng-controller="ApplicationController">
 <div class="container">
-  <nav class="navbar navbar-default navbar-fixed-top" ng-show="currentUser">
+  <nav class="navbar navbar-default navbar-fixed-top" ng-show="isAuthorized()">
     <div class="container-fluid">
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li ng-class="{'active': path == '/'}"><a href="#/">Meine Einheiten {{isMainDialog}}</a></li>
+          <li ng-class="{'active': path == '/'}"><a href="#/">Meine Einheiten</a></li>
+          <li ng-class="{'active': path == '/ranking'}"><a href="#/ranking">Ranglisten</a></li>
+          <li>
+            <button type="button" ng-click="goTo('/addentry')" class="btn btn-primary navbar-btn">Einheit eintragen
+            </button>
+          </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <button type="button" ng-click="goTo('/addentry')" class="btn btn-primary navbar-btn">Einheit eintragen</button>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                  aria-expanded="false"><span class="glyphicon glyphicon-user"
+                                                              aria-hidden="true"></span><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#/profile">Profil bearbeiten</a></li>
+              <li><a ng-click="logout()">Logout</a></li>
+            </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <div ng-view=""></div>
+  <div ng-view="" ng-show="isAuthorized() || isLoginPage"></div>
   <div login-dialog ng-if="!isLoginPage"></div>
 </div>
 
@@ -85,6 +95,8 @@
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/login.js"></script>
 <script src="scripts/controllers/addEntry.js"></script>
+<script src="scripts/controllers/ranking.js"></script>
+<script src="scripts/controllers/profile.js"></script>
 <!-- endbuild -->
 </body>
 </html>

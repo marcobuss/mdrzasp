@@ -40,6 +40,20 @@ angular
         templateUrl: 'views/register.html',
         controller: 'LoginCtrl'
       })
+      .when('/ranking', {
+        templateUrl: 'views/ranking.html',
+        controller: 'RankingCtrl',
+        data: {
+          authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
+        }
+      })
+      .when('/profile', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl',
+        data: {
+          authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
+        }
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -76,10 +90,13 @@ angular
       $route.reload();
     });
   })
-  .controller('ApplicationController', function ($scope, $rootScope, $location, USER_ROLES, AuthService) {
+  .controller('ApplicationController', function ($scope, $rootScope, $location, $route, USER_ROLES, AuthService) {
     $scope.currentUser = null;
     $scope.userRoles = USER_ROLES;
-    $scope.isAuthorized = AuthService.isAuthorized;
+
+    $scope.isAuthorized = function() {
+      return AuthService.isAuthenticated();
+    }
 
     $scope.setCurrentUser = function (user) {
       $scope.currentUser = user;
@@ -88,6 +105,12 @@ angular
     $scope.goTo = function(path) {
       $location.path(path);
     };
+
+    $scope.logout = function() {
+      $scope.currentUser = null;
+      AuthService.logout();
+      $route.reload();
+    }
 
     $rootScope.$on('$routeChangeSuccess', function(event, next) {
       $scope.path = next.originalPath;

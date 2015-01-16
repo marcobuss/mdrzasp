@@ -1,6 +1,6 @@
-module.exports = function(Entry) {
+module.exports = function (Entry) {
 
-  Entry.beforeSave = function(next, modelInstance) {
+  Entry.beforeSave = function (next, modelInstance) {
     calculatePoints(modelInstance);
     next();
   };
@@ -12,4 +12,5 @@ module.exports = function(Entry) {
   function trunc(x) {
     return x < 0 ? Math.ceil(x) : Math.floor(x);
   };
+
 };

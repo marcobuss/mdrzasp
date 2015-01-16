@@ -8,11 +8,12 @@
     ]
   },
   "User": {
-    "dataSource": "mongoDs"
+    "dataSource": "mongoDs",
+    "public": true
   },
   "AccessToken": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "ACL": {
     "dataSource": "db",
@@ -27,6 +28,10 @@
     "public": false
   },
   "Entry": {
+    "dataSource": "mongoDs",
+    "public": true
+  },
+  "Customer": {
     "dataSource": "mongoDs",
     "public": true
   }

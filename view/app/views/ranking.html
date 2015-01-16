@@ -1,0 +1,18 @@
+<div class="" ng-controller="RankingCtrl">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Punkte</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="entry in ranking | orderBy:'result':true">
+      <td>{{$index + 1}}</td>
+      <td>{{entry.username}}</td>
+      <td><strong><span class="text-success">{{entry.result}}</span></strong></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
