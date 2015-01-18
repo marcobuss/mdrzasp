@@ -47,13 +47,6 @@ angular
           authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
         }
       })
-      .when('/profile', {
-        templateUrl: 'views/profile.html',
-        controller: 'ProfileCtrl',
-        data: {
-          authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
-        }
-      })
       .otherwise({
         redirectTo: '/'
       });

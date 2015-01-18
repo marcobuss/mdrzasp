@@ -33,7 +33,7 @@
                                   aria-expanded="false"><span class="glyphicon glyphicon-user"
                                                               aria-hidden="true"></span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#/profile">Profil bearbeiten</a></li>
+              <li><a ng-click="showProfileDialog()">Profil bearbeiten</a></li>
               <li><a ng-click="logout()">Logout</a></li>
             </ul>
           </li>
@@ -43,6 +43,7 @@
   </nav>
   <div ng-view="" ng-show="isAuthorized() || isLoginPage"></div>
   <div login-dialog ng-if="!isLoginPage"></div>
+  <profile-dialog />
 </div>
 
 <footer class="footer">
@@ -90,6 +91,7 @@
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/directives/loginDialog.js"></script>
+<script src="scripts/directives/profileDialog.js"></script>
 <script src="scripts/services/rest-service.js"></script>
 <script src="scripts/services/auth.js"></script>
 <script src="scripts/controllers/main.js"></script>
