@@ -1,28 +1,60 @@
 <div class="panel panel-primary" ng-controller="LoginCtrl">
   <div class="panel-heading">Benutzer registrieren</div>
   <div class="panel-body">
-    <form ng-submit="registerNewUser(credentials)">
+    <form name="registerForm" novalidate ng-submit="registerNewUser(credentials)">
       <div class="alert alert-danger alert-dismissible" role="alert" ng-show="error">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         {{error.email}}{{error.emailRepeat}}{{error.password}}{{error.passwordRepeat}}
       </div>
-      <div class="form-group" ng-class="{'has-error': error.email}">
+
+      <div class="form-group"
+           ng-class="{'has-error': error.email || (registerForm.email.$invalid && registerForm.email.$touched)}">
         <label for="email" class="control-label">E-Mail Adresse:</label>
-        <input class="form-control" type="email" id="email" ng-model="credentials.email"/>
+        <input class="form-control" type="email" id="email" name="email"
+               ng-model="credentials.email" required="true"/>
+        <div ng-show="registerForm.email.$touched" class="help-block text-danger">
+          <div ng-show="registerForm.email.$error.required">Bitte eine E-Mail Adresse eingeben</div>
+          <div ng-show="registerForm.email.$error.email">keine gültige E-Mail Adresse</div>
+        </div>
       </div>
-      <div class="form-group" ng-class="{'has-error': error.emailRepeat}">
+      <div class="form-group" ng-class="{'has-error': error.emailRepeat || (registerForm.emailRepeat.$invalid && registerForm.emailRepeat.$touched)}">
         <label for="email_repeat" class="control-label">E-Mail Adresse (Wiederholung):</label>
-        <input class="form-control" type="email" id="email_repeat" ng-model="credentials.emailRepeat"/>
+        <input class="form-control" type="email" id="email_repeat" name="emailRepeat"
+               ng-model="credentials.emailRepeat" required="true"/>
+
+        <div ng-show="registerForm.emailRepeat.$touched" class="help-block text-danger">
+          <div ng-show="registerForm.emailRepeat.$error.required">Bitte die E-Mail Adresse wiederholen</div>
+          <div ng-show="registerForm.emailRepeat.$error.email">keine gültige E-Mail Adresse</div>
+        </div>
       </div>
-      <div class="form-group" ng-class="{'has-error': error.password}">
+      <div class="form-group" ng-class="{'has-error': error.name || (registerForm.name.$invalid && registerForm.name.$touched)}">
+        <label for="name" class="control-label">Name:</label>
+        <input class="form-control" type="text" id="name" name="name"
+               ng-model="credentials.username" required="true"/>
+
+        <div ng-show="registerForm.name.$touched" class="help-block text-danger">
+          <div ng-show="registerForm.name.$error.required">Bitte einen Namen eingeben</div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error': error.password || (registerForm.password.$invalid && registerForm.password.$touched)}">
         <label for="password" class="control-label">Passwort:</label>
-        <input class="form-control" type="password" id="password" ng-model="credentials.password"/>
+        <input class="form-control" type="password" id="password" name="password"
+               ng-model="credentials.password" required="true"/>
+
+        <div ng-show="registerForm.password.$touched" class="help-block text-danger">
+          <div ng-show="registerForm.password.$error.required">Bitte ein Passwort eingeben</div>
+        </div>
       </div>
-      <div class="form-group" ng-class="{'has-error': error.passwordRepeat}">
+      <div class="form-group" ng-class="{'has-error': error.passwordRepeat || (registerForm.passwordRepeat.$invalid && registerForm.passwordRepeat.$touched)}">
         <label for="password_repeat" class="control-label">Passwort (Wiederholung):</label>
-        <input class="form-control" type="password" id="password_repeat" ng-model="credentials.passwordRepeat"/>
+        <input class="form-control" type="password" id="password_repeat" name="passwordRepeat"
+               ng-model="credentials.passwordRepeat" required="true"/>
+
+        <div ng-show="registerForm.passwordRepeat.$touched" class="help-block text-danger">
+          <div ng-show="registerForm.passwordRepeat.$error.required">Bitte das Passwort wiederholen</div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-default">Registrieren</button>
+      <button type="submit" class="btn btn-default" ng-class="{'disabled': registerForm.$invalid}">Registrieren</button>
     </form>
   </div>
 </div>

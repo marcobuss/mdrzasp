@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name mdrzaspApp.controller:RankingCtrl
@@ -7,15 +5,22 @@
  * # RankingCtrl
  * Controller of the mdrzaspApp
  */
-angular.module('mdrzaspApp')
-  .controller('RankingCtrl', function ($scope, Session, Customer) {
+(function() {
+  'use strict';
 
+  angular
+    .module('mdrzaspApp')
+    .controller('RankingCtrl', ranking);
+
+  ranking.$inject = ['$scope', 'Session', 'Customer'];
+
+  function ranking($scope, Session, Customer) {
     getRanking();
 
     function getRanking() {
       Customer.points(
         function (list) {
-          list.forEach(function(element, index) {
+          list.forEach(function(element) {
             element.result = 0;
             element.entries.reduceRight(function(previus, current) {
               element.result += current.points;
@@ -28,6 +33,6 @@ angular.module('mdrzaspApp')
         function (errorResponse) {
           console.log(errorResponse)
         });
-    };
-
-  });
+    }
+  }
+})();

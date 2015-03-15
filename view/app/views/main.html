@@ -7,6 +7,7 @@
       <th>Sportart</th>
       <th>Punkte</th>
       <th>Dauer</th>
+      <th width="20px"></th>
     </tr>
     </thead>
     <tbody>
@@ -19,7 +20,9 @@
       </td>
       <td><strong><span class="text-success">{{entry.points}}</span></strong></td>
       <td>{{entry.duration}} min <small>({{getInHour(entry.duration)}}h)</small></td>
+      <td><a ng-click="showEntryEditDialog(entry.id)" ng-if="isEditable(entry.created)"><span class="glyphicon glyphicon-pencil"></span></a></td>
     </tr>
     </tbody>
     </table>
+
 </div>
