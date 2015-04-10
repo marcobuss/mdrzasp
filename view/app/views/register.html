@@ -6,6 +6,10 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         {{error.email}}{{error.emailRepeat}}{{error.password}}{{error.passwordRepeat}}
       </div>
+      <div class="alert alert-success alert-dismissible" role="alert" ng-show="success">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{success.register}}
+      </div>
 
       <div class="form-group"
            ng-class="{'has-error': error.email || (registerForm.email.$invalid && registerForm.email.$touched)}">

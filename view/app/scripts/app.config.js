@@ -33,6 +33,10 @@
           authorizedRoles: [USER_ROLES.admin, USER_ROLES.user]
         }
       })
+      .when('/reset-password/:accessToken/:userId', {
+        templateUrl: 'views/main.html',
+        controller: 'ResetPasswordCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

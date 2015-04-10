@@ -48,9 +48,11 @@
     }
 
     function loadProfile() {
-      $scope.profile = Customer.findById({id: Session.userId},
+      Customer.findById({id: Session.userId},
         function (profile) {
-        },
+          profile.passwordRepeat = null;
+          $scope.profile = profile;
+       },
         function (error) {
           console.log(error);
         });

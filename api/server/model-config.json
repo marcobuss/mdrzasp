@@ -7,6 +7,9 @@
       "./models"
     ]
   },
+  "Email": {
+    "dataSource": "emailDs"
+  },
   "User": {
     "dataSource": "mongoDs",
     "public": true
@@ -33,6 +36,9 @@
   },
   "Customer": {
     "dataSource": "mongoDs",
-    "public": true
+    "public": true,
+    "options": {
+      "emailVerificationRequired": true
+    }
   }
 }

@@ -6,7 +6,6 @@
     .factory('Session', session);
 
   function session() {
-    //this.showLoginDialog;
 
     this.create = function (sessionId, userId, userRole) {
       this.id = sessionId;

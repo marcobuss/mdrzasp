@@ -7,18 +7,24 @@
 
   authService.$inject = [
     'Session', 'Customer', 'USER_ROLES', '$q', '$route',
-    '$rootScope', 'AUTH_EVENTS'
+    '$rootScope', 'AUTH_EVENTS', 'LoopBackAuth'
   ];
 
-  function authService(Session, Customer, USER_ROLES, $q, $route, $rootScope, AUTH_EVENTS) {
+  function authService(Session, Customer, USER_ROLES, $q, $route, $rootScope, AUTH_EVENTS, LoopBackAuth) {
     return {
       register: register,
       login: login,
       logout: logout,
       isAuthenticated: isAuthenticated,
       isAuthorized: isAuthorized,
-      initialize: initialize
+      initialize: initialize,
+      resetPassword: resetPassword,
+      temporaryLogin: temporaryLogin
     };
+
+    function resetPassword(email) {
+      return Customer.resetPassword({}, {email: email}).$promise;
+    }
 
     function register(credentials) {
       return Customer.create({
@@ -26,6 +32,11 @@
         password: credentials.password,
         username: credentials.username
       }).$promise;
+    }
+
+    function temporaryLogin(userId, accessToken) {
+      LoopBackAuth.setUser(accessToken, userId);
+      LoopBackAuth.save();
     }
 
     function login(credentials) {

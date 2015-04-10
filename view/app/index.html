@@ -37,8 +37,6 @@
           <li ng-class="{'active': path == '/'}"><a href="#/">Meine Einheiten</a></li>
           <li ng-class="{'active': path == '/ranking'}"><a href="#/ranking">Ranglisten</a></li>
           <li>
-            <!--<button type="button" ng-click="goTo('/addentry')" class="btn btn-primary navbar-btn hidden-xs">Einheit eintragen
-            </button>-->
             <button type="button" ng-click="showEntryEditDialog()" class="btn btn-primary navbar-btn hidden-xs">Einheit eintragen
             </button>
             <button ng-show="!currentUser.username" type="button" ng-click="showProfileDialog()"
@@ -59,7 +57,8 @@
       </div>
     </div>
   </nav>
-  <div ng-view="" ng-show="isAuthorized() || isLoginPage"></div>
+  <application-messages/></application-messages>
+  <div ng-view="" ng-show="isAuthorized() || isLoginPage || isPasswordRestPage"></div>
   <div login-dialog ng-if="!isLoginPage"></div>
   <profile-dialog />
   <entry-Dialog />
@@ -124,6 +123,10 @@
 <script src="scripts/controllers/ranking.controller.js"></script>
 <script src="scripts/controllers/profile.controller.js"></script>
 <script src="scripts/application.controller.js"></script>
+<script src="scripts/controllers/resetPassword.controller.js"></script>
+<script src="scripts/services/applicationMessage.service.js"></script>
+<script src="scripts/directives/applicationMessages.directive.js"></script>
+<script src="scripts/directives/passwordAndRepeatAreEqual.directive.js"></script>
 <!-- endbuild -->
 </body>
 </html>

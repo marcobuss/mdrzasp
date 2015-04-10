@@ -5,10 +5,9 @@
     .module('mdrzaspApp')
     .controller('LoginCtrl', login);
 
-  login.$inject = ['$scope', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService'];
+  login.$inject = ['$scope', '$rootScope', 'AUTH_EVENTS', 'AuthService', '$modal', 'ApplicationMessages'];
 
-  function login($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
-    var emailFilter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  function login($scope, $rootScope, AUTH_EVENTS, AuthService, $modal, ApplicationMessages) {
     var credentials = {
       email: '',
       password: ''
@@ -16,8 +15,22 @@
 
     $scope.isLoginPage = true;
     $scope.credentials = credentials;
+
     $scope.registerNewUser = registerNewUser;
     $scope.login = login;
+    $scope.resetPassword = resetPassword;
+    $scope.showPasswordResetRequestDialog = showPasswordResetRequestDialog;
+    $scope.close = close;
+
+    function resetPassword(profile) {
+      AuthService.resetPassword(profile.email).then( function(success) {
+          modalInstance.close();
+          ApplicationMessages.addInfoMessage("EMail wurde versendet. Bitte den Anweisungen in der EMail folgen.");
+        }, function() {
+          modalInstance.close(error);
+          ApplicationMessages.addErrorMessage("Email konnte nicht versendet werden. Bitte später versuchen.");
+        });
+    }
 
     function registerNewUser(credentials) {
       if (!isCredentialsValid(credentials)) {
@@ -27,9 +40,9 @@
       AuthService.register(credentials).then(function (user) {
         console.log(user);
 
-        $scope.login(credentials).then(function (user) {
-          $location.path('/');
-        });
+        $scope.success = {
+          register: 'Registrierung erfolgreich. Du erhälst eine E-Mail mit der die Registrierung abgeschlossen werden kann.'
+        }
       }, function (error) {
         console.log(error);
         $scope.error = {
@@ -69,6 +82,18 @@
             credentials: 'Benutzername oder Passwort falsch.'
           }
         });
+    }
+
+    var modalInstance;
+    function showPasswordResetRequestDialog() {
+      modalInstance = $modal.open({
+        templateUrl: 'views/reset-request.html',
+        scope: $scope
+      });
+    }
+
+    function close() {
+      modalInstance.close();
     }
   }
 })();

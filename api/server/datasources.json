@@ -9,5 +9,12 @@
     "database": "mdrzasp",
     "name": "mongoDs",
     "connector": "mongodb"
+  },
+  "emailDs": {
+    "name": "emailDs",
+    "connector": "mail",
+    "transports": [
+
+    ]
   }
 }

@@ -21,9 +21,9 @@
 
     $scope.categorys = CATEGORIES;
     $scope.openCalendar = openCalendar;
-    $scope.save = saveEntry;
+    $scope.saveEntry = saveEntry;
     $scope.showEntryEditDialog = showEntryEditDialog;
-    $scope.close = close;
+    $scope.closeEntry = close;
     $scope.isEditable = isEditable;
 
     initDatepicker();

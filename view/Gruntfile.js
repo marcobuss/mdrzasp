@@ -38,6 +38,23 @@ module.exports = function (grunt) {
       }
     },
 
+    docular: {
+      docular_webapp_target: '/dist/docs',
+      groups: [
+        {
+          groupTitle: 'LoopBack',
+          groupId: 'loopback',
+          sections: [
+            {
+              id: 'lbServices',
+              title: 'LoopBack Services',
+              scripts: [ 'app/scripts/services/rest-service.js' ]
+            }
+          ]
+        }
+      ]
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -422,6 +439,10 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
   });
+
+  grunt.registerTask('doc', [
+    'docular'
+  ]);
 
   grunt.registerTask('test', [
     'clean:server',

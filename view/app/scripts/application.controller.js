@@ -26,10 +26,13 @@
     };
 
     $scope.logout = function() {
+      $location.path('/');
       $scope.currentUser = null;
       AuthService.logout();
       $route.reload();
-    }
+    };
+
+
 
     $rootScope.$on('$routeChangeSuccess', function(event, next) {
       $scope.path = next.originalPath;
