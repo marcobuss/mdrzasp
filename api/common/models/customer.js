@@ -14,7 +14,7 @@ module.exports = function (Customer) {
       from: 'noreply@mdrzasp.suhail.uberspace.de',
       subject: 'Willkommen beim Sommerpokal 2015',
       template: path.resolve(__dirname, '../../server/views/verify.ejs'),
-      redirect: encodeURIComponent('http://' + config.host + ':' + config.sitePort + '/#/'),
+      redirect: encodeURIComponent('http://' + config.siteHost + ':' + config.sitePort + '/#/'),
       user: Customer
     };
 
@@ -32,7 +32,7 @@ module.exports = function (Customer) {
 
   //send password reset link when requested
   Customer.on('resetPasswordRequest', function(info) {
-    var url = 'http://' + config.host + ':' + config.sitePort + '/#/reset-password' + '/' + info.accessToken.id + '/' + info.accessToken.userId;
+    var url = 'http://' + config.siteHost + ':' + config.sitePort + '/#/reset-password' + '/' + info.accessToken.id + '/' + info.accessToken.userId;
     var template = loopback.template(path.resolve(__dirname, '../../server/views/reset.ejs'));
     info.url = url;
 
