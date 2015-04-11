@@ -9,7 +9,7 @@
     var dirctive = {
       restrict: 'E',
       controller: ApplicationMessagesController ,
-      template: '<div ng-include="\'views/messages.html\'"/>'
+      template: '<div ng-include="\'views/messages.html\'">'
     };
 
     return dirctive;

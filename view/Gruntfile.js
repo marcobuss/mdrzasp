@@ -40,6 +40,9 @@ module.exports = function (grunt) {
 
     docular: {
       docular_webapp_target: '/dist/docs',
+      useHtml5Mode: false,
+      showAngularDocs: true,
+      showDocularDocs: true,
       groups: [
         {
           groupTitle: 'LoopBack',
@@ -53,6 +56,10 @@ module.exports = function (grunt) {
           ]
         }
       ]
+    },
+
+    docularserver: {
+      targetDir: "/dist/docs"
     },
 
     // Watches files for changes and runs tasks based on the changed files
