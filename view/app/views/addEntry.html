@@ -29,7 +29,7 @@
 
       <p class="input-group">
         <input id="date" name="date" class="form-control" datepicker-popup="{{format}}" ng-model="entry.date"
-               is-open="opened"
+               is-open="$parent.opened"
                min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"
                required/>
         <span class="input-group-btn">

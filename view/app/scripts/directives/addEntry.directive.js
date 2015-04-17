@@ -14,9 +14,9 @@
     return directive;
   }
 
-  AddEntryCtrl.$inject = ['$scope', 'Entry', 'CATEGORIES', '$modal', 'Session', '$route', 'datepickerPopupConfig'];
+  AddEntryCtrl.$inject = ['$scope', 'Entry', 'CATEGORIES', '$modal', 'Session', '$route', 'datepickerPopupConfig', 'ApplicationMessages'];
 
-  function AddEntryCtrl($scope, Entry, CATEGORIES, $modal, Session, $route, datepickerPopupConfig) {
+  function AddEntryCtrl($scope, Entry, CATEGORIES, $modal, Session, $route, datepickerPopupConfig, ApplicationMessages) {
     var modalInstance;
 
     $scope.categorys = CATEGORIES;
@@ -46,10 +46,17 @@
     function saveEntry(entry) {
       $scope.successMessage = null;
 
-      Entry.upsert(entry, function(e) {
-        $scope.successMessage = 'Eintrag erfolgreich angelegt';
-        close(true);
-      });
+      if(entry.id) {
+        entry.$save();
+        ApplicationMessages.addInfoMessage('Einheit geändert.');
+      } else {
+        Entry.upsert(entry);
+
+        ApplicationMessages.addInfoMessage('Einheit angelegt.');
+      }
+
+      close(true);
+
     }
 
     var entryId = null;

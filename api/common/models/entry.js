@@ -1,9 +1,13 @@
 module.exports = function (Entry) {
 
-  Entry.beforeSave = function (next, modelInstance) {
-    calculatePoints(modelInstance);
+  Entry.observe('before save', function calculate(ctx, next) {
+    if(ctx.instance) {
+      calculatePoints(ctx.instance);
+    } else {
+      calculatePoints(ctx.data);
+    }
     next();
-  };
+  });
 
   function calculatePoints(entry) {
     entry.points = trunc(entry.duration / 15);

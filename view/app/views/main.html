@@ -7,7 +7,7 @@
       <th>Sportart</th>
       <th>Punkte</th>
       <th>Dauer</th>
-      <th width="20px"></th>
+      <th width="50px"></th>
     </tr>
     </thead>
     <tbody>
@@ -20,7 +20,10 @@
       </td>
       <td><strong><span class="text-success">{{entry.points}}</span></strong></td>
       <td>{{entry.duration}} min <small>({{getInHour(entry.duration)}}h)</small></td>
-      <td><a ng-click="showEntryEditDialog(entry.id)" ng-if="isEditable(entry.created)"><span class="glyphicon glyphicon-pencil"></span></a></td>
+      <td>
+        <a ng-click="showEntryEditDialog(entry.id)" ng-if="isEditable(entry.created)" tooltip="Einheit bearbeiten" tooltip-popup-delay='1000'><div class="glyphicon glyphicon-pencil"></div></a>
+        <a ng-click="deleteEntry(entry.id)" ng-if="isEditable(entry.created)" tooltip="Einheit löschen" tooltip-popup-delay='1000'><div class="glyphicon glyphicon-trash"></div></a>
+      </td>
     </tr>
     </tbody>
     </table>
