@@ -24,6 +24,8 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    replacementConfig: grunt.file.readJSON('../../mdrzasp-config.json'),
+
     // Project settings
     yeoman: appConfig,
 
@@ -33,7 +35,7 @@ module.exports = function (grunt) {
           input: '../api/server/server.js',
           output: 'app/scripts/services/rest-service.js',
           ngModuleName: 'restService',
-          apiUrl: 'http://0.0.0.0:3000/api'
+          apiUrl: '<%= replacementConfig.resturl %>'
         }
       }
     },
@@ -460,6 +462,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'loopback_sdk_angular',
     'clean:dist',
     'wiredep',
     'useminPrepare',

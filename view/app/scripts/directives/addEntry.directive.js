@@ -47,16 +47,23 @@
       $scope.successMessage = null;
 
       if(entry.id) {
-        entry.$save();
-        ApplicationMessages.addInfoMessage('Einheit geändert.');
+        entry.$save(function(success){
+          close(true);
+          ApplicationMessages.addInfoMessage('Einheit geändert.');
+        }, function(error) {
+          console.log(error);
+        });
+
       } else {
-        Entry.upsert(entry);
+        Entry.upsert(entry, function (success) {
+          ApplicationMessages.addInfoMessage('Einheit angelegt.');
+          close(true);
+        }, function (error) {
 
-        ApplicationMessages.addInfoMessage('Einheit angelegt.');
+        });
+
+
       }
-
-      close(true);
-
     }
 
     var entryId = null;
@@ -102,6 +109,7 @@
 
     function initDatepicker() {
       $scope.maxDate = new Date();
+      $scope.minDate = new Date(2015, 3, 20);
 
       $scope.dateOptions = {
         formatYear: 'yy',
